@@ -3,9 +3,12 @@ package com.tomo3284.lcmanagementapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tomo3284.lcmanagementapp.fragments.ProfileFragment;
@@ -19,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
     private SolveFragment mSolveFragment;
     private SolvedListFragment mSolvedListFragment;
     private ProfileFragment mProfileFragment;
-
 
     private BottomNavigationView.OnNavigationItemSelectedListener bottomNavigationListener= new BottomNavigationView.OnNavigationItemSelectedListener(){
         @Override
@@ -55,7 +57,10 @@ public class MainActivity extends AppCompatActivity {
                     itemFragment = mSolveFragment;
             }
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, itemFragment).commit();
+            getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                    .replace(R.id.fragment_container, itemFragment)
+                    .commit();
 
             return true;
         }
@@ -73,5 +78,36 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, mSolveFragment).commit();
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavigationListener);
+    }
+
+    public void pushFragment(Fragment fragment, String tag) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction()
+                .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
+
+        //when loading new fragment to the BackStack, make current top stack fragment hide
+        int top = fragmentManager.getBackStackEntryCount() - 1;
+        if (top >= 0) {
+            FragmentManager.BackStackEntry backStackEntry = fragmentManager.getBackStackEntryAt(top);
+            Fragment currentFragment = fragmentManager.findFragmentByTag(backStackEntry.getName());
+            currentFragment.getView().setVisibility(View.GONE);
+        }
+
+        fragmentTransaction.add(R.id.fragment_container, fragment, tag);
+        fragmentTransaction.addToBackStack(tag);
+        fragmentTransaction.commit();
+    }
+
+    private void popFragmentFromBackStack() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.popBackStackImmediate();// pop current top fragment
+
+        // make the top fragment visible
+        int top = fragmentManager.getBackStackEntryCount() - 1;
+        if (top >= 0) {
+            FragmentManager.BackStackEntry backStackEntry = fragmentManager.getBackStackEntryAt(top);
+            Fragment currentFragment = fragmentManager.findFragmentByTag(backStackEntry.getName());
+            currentFragment.getView().setVisibility(View.VISIBLE);
+        }
     }
 }
