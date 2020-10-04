@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.king.view.arcseekbar.ArcSeekBar;
 import com.tomo3284.lcmanagementapp.MainActivity;
 import com.tomo3284.lcmanagementapp.R;
 
@@ -35,6 +36,7 @@ public class SolveFragment extends Fragment {
 
     // normal variables
     private String mDifficulty = EASY;
+    private int mEstimateTimeMin = 30;
 
     public SolveFragment() {
         // Required empty public constructor
@@ -51,8 +53,36 @@ public class SolveFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_solve, container, false);
 
         setupButtons();
+        setupViews();
 
         return mView;
+    }
+
+    private void setupViews() {
+        final ArcSeekBar arcSeekBar = mView.findViewById(R.id.arcSeekBar);
+        arcSeekBar.setOnChangeListener(new ArcSeekBar.OnChangeListener() {
+            @Override
+            public void onStartTrackingTouch(boolean isCanDrag) {
+
+            }
+
+            @Override
+            public void onProgressChanged(float progress, float max, boolean fromUser) {
+                mEstimateTimeMin = (int) progress;
+                String minInStr = mEstimateTimeMin + "\nmin";
+                arcSeekBar.setLabelText(minInStr);
+            }
+
+            @Override
+            public void onStopTrackingTouch(boolean isCanDrag) {
+
+            }
+
+            @Override
+            public void onSingleTapUp() {
+
+            }
+        });
     }
 
     private void setupButtons() {
