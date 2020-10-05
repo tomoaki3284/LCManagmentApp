@@ -14,9 +14,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.king.view.arcseekbar.ArcSeekBar;
 import com.tomo3284.lcmanagementapp.MainActivity;
+import com.tomo3284.lcmanagementapp.Models.Problem;
 import com.tomo3284.lcmanagementapp.R;
 
 public class SolveFragment extends Fragment {
@@ -30,6 +32,8 @@ public class SolveFragment extends Fragment {
     // view related
     private MainActivity mParentActivity;
     private View mView;
+    private EditText mProblemTitleET;
+    private EditText mProblemNumberET;
 
     // buttons
     private Button mEasyButton;
@@ -85,6 +89,9 @@ public class SolveFragment extends Fragment {
 
             }
         });
+
+        mProblemTitleET = mView.findViewById(R.id.problemTitle);
+        mProblemNumberET = mView.findViewById(R.id.problemNumber);
     }
 
     private void setupButtons() {
@@ -100,9 +107,19 @@ public class SolveFragment extends Fragment {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 2020/10/05 - load next next fragment through parent activity
+                String problemTitle = mProblemTitleET.getText().toString();
+                if (mProblemNumberET.getText().toString().length() == 0) {
+                    mProblemNumberET.setError("problem# cannot be empty");
+                    return;
+                }
+                int problemNumber = Integer.parseInt(mProblemNumberET.getText().toString());
+
+                if (!validInputs(problemTitle, problemNumber)) return;
+                Problem problem = new Problem(mDifficulty, problemTitle, problemNumber);
+
                 SolvingFragment solvingFragment = new SolvingFragment();
                 solvingFragment.setParentActivity(mParentActivity);
+                solvingFragment.setProblem(problem);
                 mParentActivity.pushFragment(solvingFragment, SolvingFragment.TAG);
             }
         });
@@ -134,6 +151,18 @@ public class SolveFragment extends Fragment {
 
         // select easy as default difficulty
         setDifficultyTo(EASY);
+    }
+
+    private boolean validInputs(String title, int problemNumber) {
+        if (title == null || title.length() == 0 || title.length() >= 50) {
+            mProblemTitleET.setError("please enter valid title");
+            return false;
+        }
+        if (problemNumber <= 0 || problemNumber >= 10000) {
+            mProblemNumberET.setError("please enter valid problem#");
+            return false;
+        }
+        return true;
     }
 
     private void setDifficultyTo(String difficulty) {

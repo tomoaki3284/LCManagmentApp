@@ -6,4 +6,6 @@
 
     <color name="leetcodeMainColor">#FBC03D</color>
     <color name="white">#ffffff</color>
+
+    <color name="listViewerTextColor">#483330</color>
 </resources>

@@ -38,28 +38,22 @@ public class MainActivity extends AppCompatActivity {
             
             switch (item.getItemId()) {
                 case R.id.page_1: // solve fragment
-                    if (mSolveFragment == null) {
-                        mSolveFragment = new SolveFragment();
-                        mSolveFragment.setParentActivity(mainActivity);
-                    }
+                    mSolveFragment = new SolveFragment();
+                    mSolveFragment.setParentActivity(mainActivity);
                     itemFragment = mSolveFragment;
                     tag = SolveFragment.TAG;
                     break;
 
                 case R.id.page_2: // solved list fragment
-                    if (mSolvedListFragment == null) {
-                        mSolvedListFragment = new SolvedListFragment();
-                        mSolvedListFragment.setParentActivity(mainActivity);
-                    }
+                    mSolvedListFragment = new SolvedListFragment();
+                    mSolvedListFragment.setParentActivity(mainActivity);
                     itemFragment = mSolvedListFragment;
                     tag = SolvedListFragment.TAG;
                     break;
 
                 case R.id.page_3: // profile fragment
-                    if (mProfileFragment == null) {
-                        mProfileFragment = new ProfileFragment();
-                        mProfileFragment.setParentActivity(mainActivity);
-                    }
+                    mProfileFragment = new ProfileFragment();
+                    mProfileFragment.setParentActivity(mainActivity);
                     itemFragment = mProfileFragment;
                     tag = ProfileFragment.TAG;
                     break;

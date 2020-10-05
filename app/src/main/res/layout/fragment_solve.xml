@@ -46,7 +46,7 @@
             android:layout_height="150dp"
             android:paddingTop="30dp"
             app:arcLabelPaddingTop="5dp"
-            app:arcLabelText="30"
+            app:arcLabelText="30\nmin"
             app:arcLabelTextColor="@android:color/white"
             app:arcLabelTextSize="20dp"
             app:arcMax="60"
@@ -137,12 +137,14 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:id="@+id/editText"
+                android:id="@+id/problemTitle"
                 android:layout_weight="8"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/leetcodeMainColor"
                 android:textSize="18sp"
+                android:textColor="@color/listViewerTextColor"
+                android:singleLine="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView4"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -159,12 +161,15 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:id="@+id/editText2"
+                android:id="@+id/problemNumber"
                 android:layout_weight="2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/leetcodeMainColor"
                 android:textSize="18sp"
+                android:textColor="@color/listViewerTextColor"
+                android:inputType="number"
+                android:singleLine="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

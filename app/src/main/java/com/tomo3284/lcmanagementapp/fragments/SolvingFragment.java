@@ -9,8 +9,10 @@ import androidx.fragment.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.tomo3284.lcmanagementapp.MainActivity;
+import com.tomo3284.lcmanagementapp.Models.Problem;
 import com.tomo3284.lcmanagementapp.R;
 
 public class SolvingFragment extends Fragment {
@@ -22,8 +24,15 @@ public class SolvingFragment extends Fragment {
     private MainActivity mParentActivity;
     private View mView;
 
+    // variables
+    private Problem mProblem;
+
     public SolvingFragment() {
         // Required empty public constructor
+    }
+
+    public void setProblem(Problem problem) {
+        mProblem = problem;
     }
 
     public void setParentActivity(MainActivity activity) {
@@ -37,8 +46,13 @@ public class SolvingFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_solving, container, false);
 
         setupButtons();
+        setupTimer();
 
         return mView;
+    }
+
+    private void setupTimer() {
+        assert mProblem != null;
     }
 
     private void setupButtons() {
@@ -49,6 +63,24 @@ public class SolvingFragment extends Fragment {
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
+        Button laterButton = mView.findViewById(R.id.laterButton);
+        laterButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                // TODO: 2020/10/05 - populate dialog to confirm exiting
+            }
+        });
+
+        Button doneButton = mView.findViewById(R.id.doneButton);
+        doneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: 2020/10/05 - navigate to SolvedFragment
+                mProblem.setCompleted(true);
+
+            }
+        });
     }
 
     public void popFragmentFromBackStack() {
