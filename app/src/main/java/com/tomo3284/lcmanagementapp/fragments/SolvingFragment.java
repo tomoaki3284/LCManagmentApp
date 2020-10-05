@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,16 +13,16 @@ import android.view.ViewGroup;
 import com.tomo3284.lcmanagementapp.MainActivity;
 import com.tomo3284.lcmanagementapp.R;
 
-public class SolvedListFragment extends Fragment {
+public class SolvingFragment extends Fragment {
 
     // constants
-    public static final String TAG = SolvedListFragment.class.getSimpleName();
+    public static final String TAG = SolvingFragment.class.getSimpleName();
 
     // view related
     private MainActivity mParentActivity;
     private View mView;
 
-    public SolvedListFragment() {
+    public SolvingFragment() {
         // Required empty public constructor
     }
 
@@ -33,7 +34,7 @@ public class SolvedListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView = inflater.inflate(R.layout.fragment_solved_list, container, false);
+        mView = inflater.inflate(R.layout.fragment_solving, container, false);
 
         setupButtons();
 
@@ -44,9 +45,23 @@ public class SolvedListFragment extends Fragment {
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                // first fragment of bottom navigation, so it shouldn't be pop
+                popFragmentFromBackStack();
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+    }
+
+    public void popFragmentFromBackStack() {
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
+        fragmentManager.popBackStackImmediate();// pop current top fragment
+
+        // make the top fragment visible
+        int top = fragmentManager.getBackStackEntryCount() - 1;
+        if (top >= 0) {
+            FragmentManager.BackStackEntry backStackEntry = fragmentManager.getBackStackEntryAt(top);
+            Fragment currentFragment = fragmentManager.findFragmentByTag(backStackEntry.getName());
+            currentFragment.getView().setVisibility(View.VISIBLE);
+        }
     }
 }

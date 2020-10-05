@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
@@ -21,6 +22,7 @@ import com.tomo3284.lcmanagementapp.R;
 public class SolveFragment extends Fragment {
 
     // constants
+    public static final String TAG = SolveFragment.class.getSimpleName();
     private static final String EASY = "EASY";
     private static final String MEDIUM = "MEDIUM";
     private static final String HARD = "HARD";
@@ -86,11 +88,22 @@ public class SolveFragment extends Fragment {
     }
 
     private void setupButtons() {
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                // first fragment of bottom navigation, so it shouldn't be pop
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
         Button startButton = mView.findViewById(R.id.startButton);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO: 2020/10/05 - load next next fragment through parent activity
+                SolvingFragment solvingFragment = new SolvingFragment();
+                solvingFragment.setParentActivity(mParentActivity);
+                mParentActivity.pushFragment(solvingFragment, SolvingFragment.TAG);
             }
         });
 
