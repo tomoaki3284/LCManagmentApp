@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.circularreveal.CircularRevealCompat;
@@ -21,6 +22,7 @@ import com.tomo3284.lcmanagementapp.Animation.CircularRevealTransition;
 import com.tomo3284.lcmanagementapp.fragments.ProfileFragment;
 import com.tomo3284.lcmanagementapp.fragments.SolveFragment;
 import com.tomo3284.lcmanagementapp.fragments.SolvedListFragment;
+import com.tomo3284.lcmanagementapp.fragments.SolvingFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,9 +32,15 @@ public class MainActivity extends AppCompatActivity {
     private SolvedListFragment mSolvedListFragment;
     private ProfileFragment mProfileFragment;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener bottomNavigationListener= new BottomNavigationView.OnNavigationItemSelectedListener(){
+    private BottomNavigationView.OnNavigationItemSelectedListener bottomNavigationListener = new BottomNavigationView.OnNavigationItemSelectedListener(){
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            // user is solving problem, shouldn't be able to use bottom navigation
+            if (getTopFragmentTag().equals(SolvingFragment.TAG)) {
+                Toast.makeText(mainActivity, "while solving problem, navigation is not active", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
             Fragment itemFragment = null;
             String tag = "";
             
@@ -107,5 +115,11 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.add(R.id.fragment_container, fragment, tag);
         fragmentTransaction.addToBackStack(tag);
         fragmentTransaction.commit();
+    }
+
+    private String getTopFragmentTag() {
+        int topIndex = getSupportFragmentManager().getBackStackEntryCount() - 1;
+        FragmentManager.BackStackEntry backEntry = getSupportFragmentManager().getBackStackEntryAt(topIndex);
+        return backEntry.getName();
     }
 }

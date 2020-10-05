@@ -6,10 +6,13 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Chronometer;
+import android.widget.Toast;
 
 import com.tomo3284.lcmanagementapp.MainActivity;
 import com.tomo3284.lcmanagementapp.Models.Problem;
@@ -23,9 +26,11 @@ public class SolvingFragment extends Fragment {
     // view related
     private MainActivity mParentActivity;
     private View mView;
+    private Chronometer mChronometer;
 
     // variables
     private Problem mProblem;
+    private long elapsedTimeMillis;
 
     public SolvingFragment() {
         // Required empty public constructor
@@ -47,6 +52,7 @@ public class SolvingFragment extends Fragment {
 
         setupButtons();
         setupTimer();
+        startChronometer();
 
         return mView;
     }
@@ -59,6 +65,7 @@ public class SolvingFragment extends Fragment {
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
+                // TODO: 2020/10/06 - maybe disallow going back when solving problem 
                 popFragmentFromBackStack();
             }
         };
@@ -68,7 +75,8 @@ public class SolvingFragment extends Fragment {
         laterButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                // TODO: 2020/10/05 - populate dialog to confirm exiting
+                // TODO: 2020/10/05 - populate dialog to confirm to exit and go result page
+                elapsedTimeMillis = SystemClock.elapsedRealtime() - mChronometer.getBase();
             }
         });
 
@@ -76,9 +84,9 @@ public class SolvingFragment extends Fragment {
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 2020/10/05 - navigate to SolvedFragment
+                // TODO: 2020/10/05 - navigate to result page
+                elapsedTimeMillis = SystemClock.elapsedRealtime() - mChronometer.getBase();
                 mProblem.setCompleted(true);
-
             }
         });
     }
@@ -95,5 +103,12 @@ public class SolvingFragment extends Fragment {
             Fragment currentFragment = fragmentManager.findFragmentByTag(backStackEntry.getName());
             currentFragment.getView().setVisibility(View.VISIBLE);
         }
+    }
+
+    public void startChronometer() {
+        mChronometer = mView.findViewById(R.id.chronometer);
+
+        mChronometer.setBase(SystemClock.elapsedRealtime());
+        mChronometer.start();
     }
 }
