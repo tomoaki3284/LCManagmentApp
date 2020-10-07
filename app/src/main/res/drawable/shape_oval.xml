@@ -4,7 +4,7 @@
         android:bottom="0dp"
         android:left="-50dp"
         android:right="-50dp"
-        android:top="-80dp">
+        android:top="-90dp">
         <shape android:shape="oval">
             <solid android:color="@color/leetcodeMainColor"/>
         </shape>
