@@ -30,7 +30,7 @@ public class SolvingFragment extends Fragment {
 
     // variables
     private Problem mProblem;
-    private long elapsedTimeMillis;
+    private long mElapsedTimeMillis;
 
     public SolvingFragment() {
         // Required empty public constructor
@@ -76,7 +76,7 @@ public class SolvingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // TODO: 2020/10/05 - populate dialog to confirm to exit and go result page
-                elapsedTimeMillis = SystemClock.elapsedRealtime() - mChronometer.getBase();
+                mElapsedTimeMillis = SystemClock.elapsedRealtime() - mChronometer.getBase();
             }
         });
 
@@ -84,9 +84,12 @@ public class SolvingFragment extends Fragment {
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 2020/10/05 - navigate to result page
-                elapsedTimeMillis = SystemClock.elapsedRealtime() - mChronometer.getBase();
+                // TODO: 2020/10/05 - navigate to result page, but pop itself before
+                mElapsedTimeMillis = SystemClock.elapsedRealtime() - mChronometer.getBase();
                 mProblem.setCompleted(true);
+                ProblemResultFragment problemResultFragment = new ProblemResultFragment();
+                problemResultFragment.setProblem(mProblem);
+                mParentActivity.replaceTopFragment(problemResultFragment, ProblemResultFragment.TAG);
             }
         });
     }

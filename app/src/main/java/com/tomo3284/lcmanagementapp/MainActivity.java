@@ -117,6 +117,25 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
+    public void replaceTopFragment(Fragment replaceBy, String tag) {
+        popFragmentFromBackStack();
+        pushFragment(replaceBy, tag);
+    }
+
+    public void popFragmentFromBackStack() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
+        fragmentManager.popBackStackImmediate();// pop current top fragment
+
+        // make the top fragment visible
+        int top = fragmentManager.getBackStackEntryCount() - 1;
+        if (top >= 0) {
+            FragmentManager.BackStackEntry backStackEntry = fragmentManager.getBackStackEntryAt(top);
+            Fragment currentFragment = fragmentManager.findFragmentByTag(backStackEntry.getName());
+            currentFragment.getView().setVisibility(View.VISIBLE);
+        }
+    }
+
     private String getTopFragmentTag() {
         int topIndex = getSupportFragmentManager().getBackStackEntryCount() - 1;
         FragmentManager.BackStackEntry backEntry = getSupportFragmentManager().getBackStackEntryAt(topIndex);
