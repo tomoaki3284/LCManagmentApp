@@ -42,4 +42,8 @@ public class ProblemList {
         }
         return filteredList;
     }
+
+    public void addProblem(Problem problem) {
+        getProblems().add(problem);
+    }
 }

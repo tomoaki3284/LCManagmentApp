@@ -4,12 +4,20 @@ import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.tomo3284.lcmanagementapp.MainActivity;
+import com.tomo3284.lcmanagementapp.Models.User;
+import com.tomo3284.lcmanagementapp.Models.UserViewModel;
+import com.tomo3284.lcmanagementapp.ProblemRecyclerViewAdapter;
 import com.tomo3284.lcmanagementapp.R;
 
 public class SolvedListFragment extends Fragment {
@@ -20,6 +28,12 @@ public class SolvedListFragment extends Fragment {
     // view related
     private MainActivity mParentActivity;
     private View mView;
+    private RecyclerView mRecyclerView;
+    private ProblemRecyclerViewAdapter mProblemRecyclerViewAdapter;
+
+    // variables
+    private User mUser;
+    private UserViewModel mUserVM;
 
     public SolvedListFragment() {
         // Required empty public constructor
@@ -36,8 +50,29 @@ public class SolvedListFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_solved_list, container, false);
 
         setupButtons();
+        setupViewModels();
+        setupRecyclerView();
 
         return mView;
+    }
+
+    private void setupRecyclerView() {
+        mProblemRecyclerViewAdapter = new ProblemRecyclerViewAdapter(getContext(), mUser.getProblemList());
+        mRecyclerView = mView.findViewById(R.id.recyclerviewSolvedList);
+        mRecyclerView.setAdapter(mProblemRecyclerViewAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
+    private void setupViewModels() {
+        mUserVM = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+        mUserVM.getUser().observe(mParentActivity, new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                mUser = user;
+            }
+        });
+        mUser = mUserVM.getUser().getValue();
+        System.out.println(mUser);
     }
 
     private void setupButtons() {

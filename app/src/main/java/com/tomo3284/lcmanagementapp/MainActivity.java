@@ -2,9 +2,12 @@ package com.tomo3284.lcmanagementapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.transition.Fade;
 import androidx.transition.Transition;
 import androidx.transition.TransitionManager;
@@ -13,12 +16,18 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.circularreveal.CircularRevealCompat;
 import com.google.android.material.circularreveal.cardview.CircularRevealCardView;
 import com.tomo3284.lcmanagementapp.Animation.CircularRevealTransition;
+import com.tomo3284.lcmanagementapp.Models.Problem;
+import com.tomo3284.lcmanagementapp.Models.ProblemList;
+import com.tomo3284.lcmanagementapp.Models.User;
+import com.tomo3284.lcmanagementapp.Models.UserViewModel;
 import com.tomo3284.lcmanagementapp.fragments.ProfileFragment;
 import com.tomo3284.lcmanagementapp.fragments.SolveFragment;
 import com.tomo3284.lcmanagementapp.fragments.SolvedListFragment;
@@ -28,9 +37,15 @@ public class MainActivity extends AppCompatActivity {
 
     private MainActivity mainActivity = this;
 
+    // view related
     private SolveFragment mSolveFragment;
     private SolvedListFragment mSolvedListFragment;
     private ProfileFragment mProfileFragment;
+    BottomNavigationView mBottomNavigationView;
+
+    // variables
+    private User mUser;
+    private UserViewModel mUserVM;
 
     private BottomNavigationView.OnNavigationItemSelectedListener bottomNavigationListener = new BottomNavigationView.OnNavigationItemSelectedListener(){
         @Override
@@ -43,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
 
             Fragment itemFragment = null;
             String tag = "";
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             
             switch (item.getItemId()) {
                 case R.id.page_1: // solve fragment
@@ -50,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
                     mSolveFragment.setParentActivity(mainActivity);
                     itemFragment = mSolveFragment;
                     tag = SolveFragment.TAG;
+                    mBottomNavigationView.setBackgroundResource(R.color.leetcodeMainColor);
+                    window.setStatusBarColor(ContextCompat.getColor(mainActivity, R.color.leetcodeMainColor));
                     break;
 
                 case R.id.page_2: // solved list fragment
@@ -57,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
                     mSolvedListFragment.setParentActivity(mainActivity);
                     itemFragment = mSolvedListFragment;
                     tag = SolvedListFragment.TAG;
+                    mBottomNavigationView.setBackgroundResource(R.color.whitePink);
+                    window.setStatusBarColor(ContextCompat.getColor(mainActivity, R.color.whitePink));
                     break;
 
                 case R.id.page_3: // profile fragment
@@ -72,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             getSupportFragmentManager().beginTransaction()
-                    .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                    .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                     .replace(R.id.fragment_container, itemFragment, tag)
                     .addToBackStack(tag)
                     .commit();
@@ -86,6 +107,46 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        loadUser();
+        setupViewModel();
+
+        setupFragment();
+    }
+
+    private void setupViewModel() {
+        mUserVM = new ViewModelProvider(this).get(UserViewModel.class);
+        mUserVM.getUser().observe(this, new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                mUser = user;
+            }
+        });
+        System.out.println(mUser);
+        mUserVM.setUser(mUser);
+        System.out.println(mUserVM.getUser().getValue());
+    }
+
+    private void loadUser() {
+        // TODO: 2020/10/12 - load user from database/file
+        // for now, it's just init user
+        String username = "tomoaki3284";
+        ProblemList problemList = new ProblemList();
+
+        // randomly init solved problem list for test purposes
+        String[] randomTitles = {"number theory", "rotate string", "rotate 2d array", "make 0's island"};
+        String[] randomDifficulties = {"easy", "medium", "hard"};
+        for (int i=0; i<30; i++) {
+            String title = randomTitles[(int) (Math.random() * randomTitles.length)];
+            String difficulty = randomDifficulties[(int) (Math.random() * randomDifficulties.length)];
+            int probNumber = (int) (Math.random() * 1234);
+            Problem problem = new Problem(difficulty,title,probNumber);
+            problemList.addProblem(problem);
+        }
+
+        mUser = new User(username, problemList);
+    }
+
+    private void setupFragment() {
         if (mSolveFragment == null) {
             mSolveFragment = new SolveFragment();
             mSolveFragment.setParentActivity(mainActivity);
@@ -95,8 +156,8 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.fragment_container, mSolveFragment, SolveFragment.TAG)
                 .addToBackStack(SolveFragment.TAG)
                 .commit();
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavigationListener);
+        mBottomNavigationView = findViewById(R.id.bottom_navigation);
+        mBottomNavigationView.setOnNavigationItemSelectedListener(bottomNavigationListener);
     }
 
     public void pushFragment(Fragment fragment, String tag) {
