@@ -20,8 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/leetcodeMainColor"
-        app:itemIconTint="@android:color/white"
-        app:itemTextColor="@android:color/white"
+        app:itemIconTint="@color/modernBrown"
+        app:itemTextColor="@color/modernBrown"
         app:menu="@menu/bottom_navigation_menu" />
 
 </RelativeLayout>

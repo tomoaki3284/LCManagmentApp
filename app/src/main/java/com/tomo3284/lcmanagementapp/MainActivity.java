@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
         // randomly init solved problem list for test purposes
         String[] randomTitles = {"number theory", "rotate string", "rotate 2d array", "make 0's island"};
         String[] randomDifficulties = {"easy", "medium", "hard"};
-        for (int i=0; i<30; i++) {
+        for (int i=0; i<7; i++) {
             String title = randomTitles[(int) (Math.random() * randomTitles.length)];
             String difficulty = randomDifficulties[(int) (Math.random() * randomDifficulties.length)];
             int probNumber = (int) (Math.random() * 1234);

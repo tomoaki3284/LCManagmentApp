@@ -9,21 +9,7 @@ public class Problem {
     private String note;
     private boolean completed;
 
-    public String getNote() {
-        return note;
-    }
 
-    public void setNote(String note) {
-        this.note = note;
-    }
-
-    public boolean isCompleted() {
-        return completed;
-    }
-
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
-    }
 
     public Problem(String difficulty, String title, int problemNumber) {
         this.difficulty = difficulty;
@@ -52,6 +38,14 @@ public class Problem {
 
     public void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
+    }
+
+    public int getEstimateTimeMin() {
+        return (int) (estimateTimeMillis / 1000 / 60);
+    }
+
+    public int getElapsedTimeMin() {
+        return (int) (elapsedTimeMillis / 1000 / 60);
     }
 
     public long getEstimateTimeMillis() {
@@ -84,5 +78,21 @@ public class Problem {
 
     public void setProblemNumber(int problemNumber) {
         this.problemNumber = problemNumber;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 }

@@ -9,6 +9,9 @@
     <color name="whitePink">#FFEBDB</color>
     <color name="modernBrown">#483330</color>
     <color name="orangeTomato">#EB7349</color>
+    <color name="easyColor">#74B666</color>
+    <color name="mediumColor">#E6B05F</color>
+    <color name="hardColor">#C95C54</color>
 
     <color name="listViewerTextColor">#483330</color>
 </resources>
