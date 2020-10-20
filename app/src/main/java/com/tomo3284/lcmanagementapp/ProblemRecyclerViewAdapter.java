@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.tomo3284.lcmanagementapp.Models.Problem;
 import com.tomo3284.lcmanagementapp.Models.ProblemList;
+import com.tomo3284.lcmanagementapp.fragments.ProblemDetailFragment;
 
 public class ProblemRecyclerViewAdapter extends RecyclerView.Adapter<ProblemRecyclerViewAdapter.ProblemViewHolder> {
 
@@ -55,7 +56,10 @@ public class ProblemRecyclerViewAdapter extends RecyclerView.Adapter<ProblemRecy
             @Override
             public void onClick(View v) {
                 // TODO: 2020/10/13 - push ProblemDetailFragment, pass problem
-
+                ProblemDetailFragment problemDetailFragment = new ProblemDetailFragment();
+                problemDetailFragment.setProblem(problem);
+                problemDetailFragment.setParentActivity(mParentActivity);
+                mParentActivity.pushFragment(problemDetailFragment, ProblemDetailFragment.TAG);
             }
         });
     }

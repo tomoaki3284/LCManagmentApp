@@ -140,6 +140,8 @@ public class MainActivity extends AppCompatActivity {
             String difficulty = randomDifficulties[(int) (Math.random() * randomDifficulties.length)];
             int probNumber = (int) (Math.random() * 1234);
             Problem problem = new Problem(difficulty,title,probNumber);
+            problem.setElapsedTimeMin(30);
+            problem.setEstimatedTimeMin(50);
             problemList.addProblem(problem);
         }
 

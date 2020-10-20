@@ -63,6 +63,16 @@ public class Problem {
         this.elapsedTimeMillis = elapsedTimeMillis;
     }
 
+    public void setElapsedTimeMin(int min) {
+        int milli = min * 60 * 1000;
+        elapsedTimeMillis = milli;
+    }
+
+    public void setEstimatedTimeMin(int min) {
+        int milli = min * 60 * 1000;
+        estimateTimeMillis = milli;
+    }
+
     public String getTitle() {
         return title;
     }
