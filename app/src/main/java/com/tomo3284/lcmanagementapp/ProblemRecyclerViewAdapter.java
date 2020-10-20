@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,10 +18,12 @@ public class ProblemRecyclerViewAdapter extends RecyclerView.Adapter<ProblemRecy
 
     private Context mContext;
     private ProblemList mProblemList;
+    private MainActivity mParentActivity;
 
-    public ProblemRecyclerViewAdapter(Context context, ProblemList problemList) {
+    public ProblemRecyclerViewAdapter(Context context, ProblemList problemList, MainActivity activity) {
         mContext = context;
         mProblemList = problemList;
+        mParentActivity = activity;
     }
 
     @NonNull
@@ -47,6 +50,14 @@ public class ProblemRecyclerViewAdapter extends RecyclerView.Adapter<ProblemRecy
         holder.difficultyTV.setTextColor(ContextCompat.getColor(mContext, colorId));
         holder.estimatedTV.setText(problem.getEstimateTimeMin() + " min");
         holder.elapsedTV.setText(problem.getElapsedTimeMin() + " min");
+
+        holder.listItemLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: 2020/10/13 - push ProblemDetailFragment, pass problem
+
+            }
+        });
     }
 
     @Override
@@ -56,6 +67,7 @@ public class ProblemRecyclerViewAdapter extends RecyclerView.Adapter<ProblemRecy
 
     public static class ProblemViewHolder extends RecyclerView.ViewHolder {
 
+        private ConstraintLayout listItemLayout;
         private TextView titleTV;
         private TextView difficultyTV;
         private TextView estimatedTV;
@@ -63,6 +75,7 @@ public class ProblemRecyclerViewAdapter extends RecyclerView.Adapter<ProblemRecy
 
         public ProblemViewHolder(View itemView) {
             super(itemView);
+            listItemLayout = itemView.findViewById(R.id.listItemLayout);
             titleTV = itemView.findViewById(R.id.titleTV);
             difficultyTV = itemView.findViewById(R.id.difficultyTV);
             estimatedTV = itemView.findViewById(R.id.estimatedTV);

@@ -1,6 +1,7 @@
 package com.tomo3284.lcmanagementapp.Models;
 
 public class Problem {
+
     private String difficulty;
     private long estimateTimeMillis;
     private long elapsedTimeMillis;
@@ -8,8 +9,6 @@ public class Problem {
     private int problemNumber;
     private String note;
     private boolean completed;
-
-
 
     public Problem(String difficulty, String title, int problemNumber) {
         this.difficulty = difficulty;
@@ -25,10 +24,10 @@ public class Problem {
 
     public int getDifficultyValue() {
         switch (difficulty) {
-            case "EASY":
+            case "easy":
                 return 1;
 
-            case "MEDIUM":
+            case "medium":
                 return 2;
 
             default:

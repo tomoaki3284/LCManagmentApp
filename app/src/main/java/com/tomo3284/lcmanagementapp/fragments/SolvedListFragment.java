@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import com.tomo3284.lcmanagementapp.MainActivity;
 import com.tomo3284.lcmanagementapp.Models.User;
@@ -30,6 +32,7 @@ public class SolvedListFragment extends Fragment {
     private View mView;
     private RecyclerView mRecyclerView;
     private ProblemRecyclerViewAdapter mProblemRecyclerViewAdapter;
+    private ImageView mSortButton;
 
     // variables
     private User mUser;
@@ -57,7 +60,7 @@ public class SolvedListFragment extends Fragment {
     }
 
     private void setupRecyclerView() {
-        mProblemRecyclerViewAdapter = new ProblemRecyclerViewAdapter(getContext(), mUser.getProblemList());
+        mProblemRecyclerViewAdapter = new ProblemRecyclerViewAdapter(getContext(), mUser.getProblemList(), mParentActivity);
         mRecyclerView = mView.findViewById(R.id.recyclerviewSolvedList);
         mRecyclerView.setAdapter(mProblemRecyclerViewAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -76,6 +79,15 @@ public class SolvedListFragment extends Fragment {
     }
 
     private void setupButtons() {
+        mSortButton = mView.findViewById(R.id.sortButton);
+        mSortButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: 2020/10/13 - generate dialog, let user pick which sort
+
+            }
+        });
+
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
