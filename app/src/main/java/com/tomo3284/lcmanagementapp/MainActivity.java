@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     // variables
     private User mUser;
     private UserViewModel mUserVM;
+    private int currentPageId = R.id.page_1;
 
     private BottomNavigationView.OnNavigationItemSelectedListener bottomNavigationListener = new BottomNavigationView.OnNavigationItemSelectedListener(){
         @Override
@@ -56,6 +57,11 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
 
+            if(item.getItemId() == currentPageId){
+                return false;
+            }
+
+            currentPageId = item.getItemId();
             Fragment itemFragment = null;
             String tag = "";
             Window window = getWindow();
@@ -140,8 +146,8 @@ public class MainActivity extends AppCompatActivity {
             String difficulty = randomDifficulties[(int) (Math.random() * randomDifficulties.length)];
             int probNumber = (int) (Math.random() * 1234);
             Problem problem = new Problem(difficulty,title,probNumber);
-            problem.setElapsedTimeMin(30);
-            problem.setEstimatedTimeMin(50);
+            problem.setElapsedTimeMin(50);
+            problem.setEstimatedTimeMin(30);
             problemList.addProblem(problem);
         }
 

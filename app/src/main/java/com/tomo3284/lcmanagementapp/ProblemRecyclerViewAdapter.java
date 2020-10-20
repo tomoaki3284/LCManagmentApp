@@ -55,7 +55,6 @@ public class ProblemRecyclerViewAdapter extends RecyclerView.Adapter<ProblemRecy
         holder.listItemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 2020/10/13 - push ProblemDetailFragment, pass problem
                 ProblemDetailFragment problemDetailFragment = new ProblemDetailFragment();
                 problemDetailFragment.setProblem(problem);
                 problemDetailFragment.setParentActivity(mParentActivity);

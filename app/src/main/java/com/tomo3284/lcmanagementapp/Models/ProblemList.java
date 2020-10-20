@@ -19,28 +19,64 @@ public class ProblemList {
         this.problems = problems;
     }
 
-    public List<Problem> getDifficultySortedList() {
-        Collections.sort(problems, (a,b) ->
-            a.getDifficultyValue() - b.getDifficultyValue()
-        );
-        return problems;
+    public void sortByDifficulty(boolean isAscending) {
+        Collections.sort(problems, (a,b) -> {
+            if(!isAscending){
+                Problem temp = a;
+                a = b;
+                b = temp;
+            }
+            return a.getDifficultyValue() - b.getDifficultyValue();
+        });
     }
 
-    public List<Problem> getProblemNumberSortedList() {
-        Collections.sort(problems, (a,b) ->
-                a.getProblemNumber() - b.getProblemNumber()
-        );
-        return problems;
+    public void sortByProblemNumber(boolean isAscending) {
+        Collections.sort(problems, (a,b) -> {
+            if(!isAscending){
+                Problem temp = a;
+                a = b;
+                b = temp;
+            }
+            return a.getProblemNumber() - b.getProblemNumber();
+        });
     }
 
-    public List<Problem> filterDifficulty(String difficulty) {
+    /**
+     * sort by title, problem number, difficulty
+     *
+     * @param isAscending
+     */
+    public void sortByTitle(boolean isAscending) {
+        Collections.sort(problems, (a,b) -> {
+            if(!isAscending){
+                Problem temp = a;
+                a = b;
+                b = temp;
+            }
+            if(a.getTitle().compareTo(b.getTitle()) == 0){
+                if(a.getProblemNumber() == b.getProblemNumber()){
+                    return a.getDifficulty().compareTo(b.getDifficulty());
+                }
+                return a.getProblemNumber() - b.getProblemNumber();
+            }
+            return a.getTitle().compareTo(b.getTitle());
+        });
+    }
+
+    public void sortByCompleteness() {
+        Collections.sort(problems, (a,b) -> {
+            return Boolean.compare(a.isCompleted(), b.isCompleted());
+        });
+    }
+
+    public ProblemList filterDifficulty(String difficulty) {
         List<Problem> filteredList = new ArrayList<>();
         for(Problem problem : problems){
             if (problem.getDifficulty().equals(difficulty)){
                 filteredList.add(problem);
             }
         }
-        return filteredList;
+        return this;
     }
 
     public void addProblem(Problem problem) {

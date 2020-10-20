@@ -1,5 +1,7 @@
 package com.tomo3284.lcmanagementapp.fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -15,8 +17,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.tomo3284.lcmanagementapp.MainActivity;
+import com.tomo3284.lcmanagementapp.Models.Problem;
+import com.tomo3284.lcmanagementapp.Models.ProblemList;
 import com.tomo3284.lcmanagementapp.Models.User;
 import com.tomo3284.lcmanagementapp.Models.UserViewModel;
 import com.tomo3284.lcmanagementapp.ProblemRecyclerViewAdapter;
@@ -75,7 +80,7 @@ public class SolvedListFragment extends Fragment {
             }
         });
         mUser = mUserVM.getUser().getValue();
-        System.out.println(mUser);
+        assert mUser != null;
     }
 
     private void setupButtons() {
@@ -84,7 +89,7 @@ public class SolvedListFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // TODO: 2020/10/13 - generate dialog, let user pick which sort
-
+                showSortDialog();
             }
         });
 
@@ -95,5 +100,52 @@ public class SolvedListFragment extends Fragment {
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+    }
+
+    private void showSortDialog() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mParentActivity);
+        alertDialog.setTitle("Sorting Option");
+        String[] items = {"Problem# ↑", "Problem# ↓",
+                "Difficulty ↑", "Difficulty ↓",
+                "Title ↑", "Title ↓",
+                "Completeness"
+        };
+        int checkedItem = 1;
+        alertDialog.setSingleChoiceItems(items, checkedItem, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch(which){
+                    case 0:
+                        mUser.getProblemList().sortByProblemNumber(true);
+                        break;
+                    case 1:
+                        mUser.getProblemList().sortByProblemNumber(false);
+                        break;
+                    case 2:
+                        mUser.getProblemList().sortByDifficulty(true);
+                        break;
+                    case 4:
+                        mUser.getProblemList().sortByDifficulty(false);
+                        break;
+                    case 5:
+                        mUser.getProblemList().sortByTitle(true);
+                        break;
+                    case 6:
+                        mUser.getProblemList().sortByTitle(false);
+                        break;
+                    case 7:
+                        mUser.getProblemList().sortByCompleteness();
+                        break;
+                }
+                updateRecycleView();
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alert = alertDialog.create();
+        alert.show();
+    }
+
+    private void updateRecycleView() {
+        mProblemRecyclerViewAdapter.notifyDataSetChanged();
     }
 }
