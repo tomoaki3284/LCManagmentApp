@@ -1,137 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/whitePink"
-    tools:context=".fragments.ProblemDetailFragment">
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="180dp">
-
-        <ImageView
-            android:id="@+id/backButton"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/ic_backbutton_big"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/problemTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:fontFamily="sans-serif"
-            android:text="&quot;Shortest Subarray with Sum&quot;"
-            android:textColor="@color/modernBrown"
-            android:textSize="28sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/backButton" />
-
-        <TextView
-            android:id="@+id/problemDifficulty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:fontFamily="sans-serif-light"
-            android:text="hard"
-            android:textColor="@color/hardColor"
-            android:textSize="24sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/problemTitle" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/shape_rectangle_top_left_round">
+        android:orientation="vertical"
+        android:background="@color/whitePink"
+        tools:context=".fragments.ProblemDetailFragment">
 
-        <LinearLayout
-            android:id="@+id/linearLayout5"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:orientation="horizontal"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:weightSum="10"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="180dp">
 
-            <com.king.view.arcseekbar.ArcSeekBar
-                android:id="@+id/arcSeekBar"
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_gravity="start|center"
-                android:layout_weight="5"
-                android:paddingTop="30dp"
-                app:arcLabelPaddingTop="5dp"
-                app:arcLabelText="30\nmin"
-                app:arcLabelTextColor="@color/modernBrown"
-                app:arcLabelTextSize="20dp"
-                app:arcMax="60"
-                app:arcNormalColor="#EEEEEE"
-                app:arcProgress="30"
-                app:arcProgressColor="@color/orangeTomato"
-                app:arcStartAngle="180"
-                app:arcSweepAngle="180"
-                app:arcThumbColor="@color/modernBrown" />
+            <ImageView
+                android:id="@+id/backButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_backbutton_big"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <com.king.view.arcseekbar.ArcSeekBar
-                android:id="@+id/arcSeekBar2"
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_gravity="end|center"
-                android:layout_weight="5"
-                android:paddingTop="30dp"
-                app:arcLabelPaddingTop="5dp"
-                app:arcLabelText="60\nmin"
-                app:arcLabelTextColor="@color/modernBrown"
-                app:arcLabelTextSize="20dp"
-                app:arcMax="60"
-                app:arcNormalColor="#EEEEEE"
-                app:arcProgress="60"
-                app:arcProgressColor="@color/orangeTomato"
-                app:arcStartAngle="180"
-                app:arcSweepAngle="180"
-                app:arcThumbColor="@color/modernBrown" />
-        </LinearLayout>
+            <ImageView
+                android:id="@+id/trashButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_trash"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:text="note"
-            android:textColor="@color/modernBrown"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
+            <TextView
+                android:id="@+id/problemTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="sans-serif"
+                android:text="&quot;Shortest Subarray with Sum&quot;"
+                android:textColor="@color/modernBrown"
+                android:textSize="28sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/backButton" />
 
-        <EditText
-            android:id="@+id/problemNote"
+            <TextView
+                android:id="@+id/problemDifficulty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:fontFamily="sans-serif-light"
+                android:text="hard"
+                android:textColor="@color/hardColor"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/problemTitle" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="24dp"
-            android:padding="10dp"
-            android:background="@drawable/rectangle_all_round_brown"
-            android:gravity="top|left"
-            android:textColor="@color/modernBrown"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView8" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_rectangle_top_left_round">
 
-</LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:orientation="horizontal"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:weightSum="10"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.king.view.arcseekbar.ArcSeekBar
+                    android:id="@+id/arcSeekBar"
+                    android:layout_width="0dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="start|center"
+                    android:layout_weight="5"
+                    android:paddingTop="30dp"
+                    app:arcLabelPaddingTop="5dp"
+                    app:arcLabelText="30\nmin"
+                    app:arcLabelTextColor="@color/modernBrown"
+                    app:arcLabelTextSize="20dp"
+                    app:arcMax="60"
+                    app:arcNormalColor="#EEEEEE"
+                    app:arcProgress="30"
+                    app:arcProgressColor="@color/orangeTomato"
+                    app:arcStartAngle="180"
+                    app:arcSweepAngle="180"
+                    app:arcThumbColor="@color/modernBrown" />
+
+                <com.king.view.arcseekbar.ArcSeekBar
+                    android:id="@+id/arcSeekBar2"
+                    android:layout_width="0dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="end|center"
+                    android:layout_weight="5"
+                    android:paddingTop="30dp"
+                    app:arcLabelPaddingTop="5dp"
+                    app:arcLabelText="60\nmin"
+                    app:arcLabelTextColor="@color/modernBrown"
+                    app:arcLabelTextSize="20dp"
+                    app:arcMax="60"
+                    app:arcNormalColor="#EEEEEE"
+                    app:arcProgress="60"
+                    app:arcProgressColor="@color/orangeTomato"
+                    app:arcStartAngle="180"
+                    app:arcSweepAngle="180"
+                    app:arcThumbColor="@color/modernBrown" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:text="note"
+                android:textColor="@color/modernBrown"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
+
+            <EditText
+                android:id="@+id/problemNote"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:padding="10dp"
+                android:background="@drawable/rectangle_all_round_brown"
+                android:gravity="top|left"
+                android:textColor="@color/modernBrown"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+</ScrollView>

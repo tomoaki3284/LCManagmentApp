@@ -1,8 +1,10 @@
 package com.tomo3284.lcmanagementapp.fragments;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -77,6 +79,28 @@ public class SolvingFragment extends Fragment {
             public void onClick(View v) {
                 // TODO: 2020/10/05 - populate dialog to confirm to exit and go result page
                 mElapsedTimeMillis = SystemClock.elapsedRealtime() - mChronometer.getBase();
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Later")
+                        .setMessage("Are you sure to keep this problem for later?")
+                        .setNegativeButton("yes later", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // navigate to result page, but pop itself before
+                                mProblem.setCompleted(false);
+                                mProblem.setElapsedTimeMillis(mElapsedTimeMillis);
+                                ProblemResultFragment problemResultFragment = new ProblemResultFragment();
+                                problemResultFragment.setProblem(mProblem);
+                                problemResultFragment.setParentActivity(mParentActivity);
+                                mParentActivity.replaceTopFragment(problemResultFragment, ProblemResultFragment.TAG);
+                            }
+                        })
+                        .setPositiveButton("never mind", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // nothing should happen
+                            }
+                        })
+                        .show();
             }
         });
 
@@ -84,11 +108,13 @@ public class SolvingFragment extends Fragment {
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 2020/10/05 - navigate to result page, but pop itself before
+                // navigate to result page, but pop itself before
                 mElapsedTimeMillis = SystemClock.elapsedRealtime() - mChronometer.getBase();
                 mProblem.setCompleted(true);
+                mProblem.setElapsedTimeMillis(mElapsedTimeMillis);
                 ProblemResultFragment problemResultFragment = new ProblemResultFragment();
                 problemResultFragment.setProblem(mProblem);
+                problemResultFragment.setParentActivity(mParentActivity);
                 mParentActivity.replaceTopFragment(problemResultFragment, ProblemResultFragment.TAG);
             }
         });

@@ -41,9 +41,9 @@ public class ProblemRecyclerViewAdapter extends RecyclerView.Adapter<ProblemRecy
         holder.titleTV.setText(problem.getTitle());
         holder.difficultyTV.setText(problem.getDifficulty());
         int colorId = 0;
-        if (problem.getDifficulty().equals("hard")) {
+        if (problem.getDifficulty().equals("Hard")) {
             colorId = R.color.hardColor;
-        } else if (problem.getDifficulty().equals("medium")) {
+        } else if (problem.getDifficulty().equals("Medium")) {
             colorId = R.color.mediumColor;
         } else {
             colorId = R.color.easyColor;

@@ -77,6 +77,8 @@ public class SolvedListFragment extends Fragment {
             @Override
             public void onChanged(User user) {
                 mUser = user;
+                // user may delete problem from history from problem detail fragment
+                updateRecycleView();
             }
         });
         mUser = mUserVM.getUser().getValue();
@@ -88,7 +90,6 @@ public class SolvedListFragment extends Fragment {
         mSortButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 2020/10/13 - generate dialog, let user pick which sort
                 showSortDialog();
             }
         });
@@ -146,6 +147,8 @@ public class SolvedListFragment extends Fragment {
     }
 
     private void updateRecycleView() {
-        mProblemRecyclerViewAdapter.notifyDataSetChanged();
+        if(mProblemRecyclerViewAdapter != null){
+            mProblemRecyclerViewAdapter.notifyDataSetChanged();
+        }
     }
 }

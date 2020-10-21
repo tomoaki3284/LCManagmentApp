@@ -24,10 +24,10 @@ public class Problem {
 
     public int getDifficultyValue() {
         switch (difficulty) {
-            case "easy":
+            case "Easy":
                 return 1;
 
-            case "medium":
+            case "Medium":
                 return 2;
 
             default:

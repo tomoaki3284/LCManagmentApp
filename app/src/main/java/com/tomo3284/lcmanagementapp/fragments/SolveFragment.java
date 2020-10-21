@@ -9,6 +9,8 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,30 +21,33 @@ import android.widget.EditText;
 import com.king.view.arcseekbar.ArcSeekBar;
 import com.tomo3284.lcmanagementapp.MainActivity;
 import com.tomo3284.lcmanagementapp.Models.Problem;
+import com.tomo3284.lcmanagementapp.Models.User;
+import com.tomo3284.lcmanagementapp.Models.UserViewModel;
 import com.tomo3284.lcmanagementapp.R;
 
 public class SolveFragment extends Fragment {
 
     // constants
     public static final String TAG = SolveFragment.class.getSimpleName();
-    private static final String EASY = "EASY";
-    private static final String MEDIUM = "MEDIUM";
-    private static final String HARD = "HARD";
+    private static final String EASY = "Easy";
+    private static final String MEDIUM = "Medium";
+    private static final String HARD = "Hard";
 
     // view related
     private MainActivity mParentActivity;
     private View mView;
     private EditText mProblemTitleET;
     private EditText mProblemNumberET;
-
-    // buttons
     private Button mEasyButton;
     private Button mMediumButton;
     private Button mHardButton;
+    private ArcSeekBar mEstimateBar;
 
     // normal variables
     private String mDifficulty = EASY;
     private int mEstimateTimeMin = 30;
+    private User mUser;
+    private UserViewModel mUserVM;
 
     public SolveFragment() {
         // Required empty public constructor
@@ -60,13 +65,26 @@ public class SolveFragment extends Fragment {
 
         setupButtons();
         setupViews();
+        setupVM();
 
         return mView;
     }
 
+    private void setupVM() {
+        mUserVM = new ViewModelProvider(mParentActivity).get(UserViewModel.class);
+        mUserVM.getUser().observe(mParentActivity, new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                mUser = user;
+            }
+        });
+        mUser = mUserVM.getUser().getValue();
+        assert mUser != null;
+    }
+
     private void setupViews() {
-        final ArcSeekBar arcSeekBar = mView.findViewById(R.id.arcSeekBar);
-        arcSeekBar.setOnChangeListener(new ArcSeekBar.OnChangeListener() {
+        mEstimateBar = mView.findViewById(R.id.arcSeekBar);
+        mEstimateBar.setOnChangeListener(new ArcSeekBar.OnChangeListener() {
             @Override
             public void onStartTrackingTouch(boolean isCanDrag) {
 
@@ -76,7 +94,7 @@ public class SolveFragment extends Fragment {
             public void onProgressChanged(float progress, float max, boolean fromUser) {
                 mEstimateTimeMin = (int) progress;
                 String minInStr = mEstimateTimeMin + "\nmin";
-                arcSeekBar.setLabelText(minInStr);
+                mEstimateBar.setLabelText(minInStr);
             }
 
             @Override
@@ -115,8 +133,10 @@ public class SolveFragment extends Fragment {
                 int problemNumber = Integer.parseInt(mProblemNumberET.getText().toString());
 
                 if (!validInputs(problemTitle, problemNumber)) return;
-                Problem problem = new Problem(mDifficulty, problemTitle, problemNumber);
 
+                Problem problem = new Problem(mDifficulty, problemTitle, problemNumber);
+                problem.setEstimatedTimeMin(mEstimateBar.getProgress());
+                mUser.getProblemList().addProblem(problem);
                 SolvingFragment solvingFragment = new SolvingFragment();
                 solvingFragment.setParentActivity(mParentActivity);
                 solvingFragment.setProblem(problem);
