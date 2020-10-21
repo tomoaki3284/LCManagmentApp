@@ -140,7 +140,13 @@ public class SolveFragment extends Fragment {
                 SolvingFragment solvingFragment = new SolvingFragment();
                 solvingFragment.setParentActivity(mParentActivity);
                 solvingFragment.setProblem(problem);
+
                 mParentActivity.pushFragment(solvingFragment, SolvingFragment.TAG);
+
+                mProblemTitleET.setText("");
+                mProblemNumberET.setText("");
+                mEstimateBar.setProgress(30);
+                mEstimateBar.setLabelText("30 min");
             }
         });
 

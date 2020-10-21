@@ -1,6 +1,8 @@
 package com.tomo3284.lcmanagementapp.Models;
 
-public class Problem {
+import java.io.Serializable;
+
+public class Problem implements Serializable {
 
     private String difficulty;
     private long estimateTimeMillis;

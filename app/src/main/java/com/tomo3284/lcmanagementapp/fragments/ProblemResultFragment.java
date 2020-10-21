@@ -65,11 +65,11 @@ public class ProblemResultFragment extends Fragment {
         TextView difficulty = mView.findViewById(R.id.problemDifficulty);
         TextView estimatedTimeTV = mView.findViewById(R.id.estimatedTV);
         TextView elapsedTimeTV = mView.findViewById(R.id.elapsedTV);
-        problemNumberTV.setText(mProblem.getProblemNumber()+"");
-        title.setText(mProblem.getTitle());
+        problemNumberTV.setText("#" + mProblem.getProblemNumber());
+        title.setText("\"" + mProblem.getTitle() + "\"");
         difficulty.setText(mProblem.getDifficulty());
-        estimatedTimeTV.setText(mProblem.getEstimateTimeMin()+"");
-        elapsedTimeTV.setText(mProblem.getElapsedTimeMin()+"");
+        estimatedTimeTV.setText(mProblem.getEstimateTimeMin()+" min");
+        elapsedTimeTV.setText(mProblem.getElapsedTimeMin()+" min");
     }
 
     private void setupVM() {

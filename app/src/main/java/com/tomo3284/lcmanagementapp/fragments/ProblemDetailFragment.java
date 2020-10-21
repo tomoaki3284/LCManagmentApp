@@ -104,7 +104,9 @@ public class ProblemDetailFragment extends Fragment {
         mNoteET.setText(mProblem.getNote());
 
         mEstimatedTimeBar.setEnabledDrag(false);
+        mEstimatedTimeBar.setEnabled(false);
         mElapsedTimeBar.setEnabledDrag(false);
+        mElapsedTimeBar.setEnabled(false);
     }
 
     private void setupView() {

@@ -1,10 +1,11 @@
 package com.tomo3284.lcmanagementapp.Models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ProblemList {
+public class ProblemList implements Serializable {
     public List<Problem> problems;
 
     public ProblemList() {

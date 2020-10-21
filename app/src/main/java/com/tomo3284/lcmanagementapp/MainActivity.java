@@ -33,6 +33,13 @@ import com.tomo3284.lcmanagementapp.fragments.SolveFragment;
 import com.tomo3284.lcmanagementapp.fragments.SolvedListFragment;
 import com.tomo3284.lcmanagementapp.fragments.SolvingFragment;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 public class MainActivity extends AppCompatActivity {
 
     private MainActivity mainActivity = this;
@@ -87,11 +94,13 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
                 case R.id.page_3: // profile fragment
-                    mProfileFragment = new ProfileFragment();
-                    mProfileFragment.setParentActivity(mainActivity);
-                    itemFragment = mProfileFragment;
-                    tag = ProfileFragment.TAG;
-                    break;
+//                    mProfileFragment = new ProfileFragment();
+//                    mProfileFragment.setParentActivity(mainActivity);
+//                    itemFragment = mProfileFragment;
+//                    tag = ProfileFragment.TAG;
+                    Toast.makeText(mainActivity, "Sorry, we are not ready for this feature yet", Toast.LENGTH_SHORT).show();
+                    return false;
+//                    break;
                     
                 default:
                     itemFragment = mSolveFragment;
@@ -135,23 +144,46 @@ public class MainActivity extends AppCompatActivity {
     private void loadUser() {
         // TODO: 2020/10/12 - load user from database/file
         // for now, it's just init user
-        String username = "tomoaki3284";
+        String username = "username";
         ProblemList problemList = new ProblemList();
+        mUser = new User(username, problemList);
 
-        // randomly init solved problem list for test purposes
-        String[] randomTitles = {"number theory", "rotate string", "rotate 2d array", "make 0's island"};
-        String[] randomDifficulties = {"Easy", "Medium", "Hard"};
-        for (int i=0; i<7; i++) {
-            String title = randomTitles[(int) (Math.random() * randomTitles.length)];
-            String difficulty = randomDifficulties[(int) (Math.random() * randomDifficulties.length)];
-            int probNumber = (int) (Math.random() * 1234);
-            Problem problem = new Problem(difficulty,title,probNumber);
-            problem.setElapsedTimeMin(50);
-            problem.setEstimatedTimeMin(30);
-            problemList.addProblem(problem);
+        try {
+            File file = new File(getDir("data", MODE_PRIVATE), "LCUser.txt");
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+            mUser = (User) ois.readObject();
+            System.out.println("loaded user successfully");
+        } catch(Exception e) {
+            e.printStackTrace();
         }
 
-        mUser = new User(username, problemList);
+//        // randomly init solved problem list for test purposes
+//        String[] randomTitles = {"number theory", "rotate string", "rotate 2d array", "make 0's island"};
+//        String[] randomDifficulties = {"Easy", "Medium", "Hard"};
+//        for (int i=0; i<7; i++) {
+//            String title = randomTitles[(int) (Math.random() * randomTitles.length)];
+//            String difficulty = randomDifficulties[(int) (Math.random() * randomDifficulties.length)];
+//            int probNumber = (int) (Math.random() * 1234);
+//            Problem problem = new Problem(difficulty,title,probNumber);
+//            problem.setElapsedTimeMin(50);
+//            problem.setEstimatedTimeMin(30);
+//            problemList.addProblem(problem);
+//        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        try {
+            File file = new File(getDir("data", MODE_PRIVATE), "LCUser.txt");
+            FileOutputStream fos = new FileOutputStream(file);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(mUser);
+            oos.flush();
+            oos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void setupFragment() {
