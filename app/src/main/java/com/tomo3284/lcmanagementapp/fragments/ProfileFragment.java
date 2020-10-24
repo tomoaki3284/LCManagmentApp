@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.tomo3284.lcmanagementapp.MainActivity;
+import com.tomo3284.lcmanagementapp.Activity.MainActivity;
 import com.tomo3284.lcmanagementapp.R;
 
 public class ProfileFragment extends Fragment {

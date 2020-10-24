@@ -10,10 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
-import com.tomo3284.lcmanagementapp.MainActivity;
+import com.tomo3284.lcmanagementapp.Activity.MainActivity;
 import com.tomo3284.lcmanagementapp.Models.Problem;
 import com.tomo3284.lcmanagementapp.Models.User;
 import com.tomo3284.lcmanagementapp.Models.UserViewModel;

@@ -1,4 +1,4 @@
-package com.tomo3284.lcmanagementapp;
+package com.tomo3284.lcmanagementapp.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,26 +8,19 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.transition.Fade;
-import androidx.transition.Transition;
-import androidx.transition.TransitionManager;
 
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.circularreveal.CircularRevealCompat;
-import com.google.android.material.circularreveal.cardview.CircularRevealCardView;
-import com.tomo3284.lcmanagementapp.Animation.CircularRevealTransition;
-import com.tomo3284.lcmanagementapp.Models.Problem;
 import com.tomo3284.lcmanagementapp.Models.ProblemList;
 import com.tomo3284.lcmanagementapp.Models.User;
 import com.tomo3284.lcmanagementapp.Models.UserViewModel;
+import com.tomo3284.lcmanagementapp.R;
 import com.tomo3284.lcmanagementapp.fragments.ProfileFragment;
 import com.tomo3284.lcmanagementapp.fragments.SolveFragment;
 import com.tomo3284.lcmanagementapp.fragments.SolvedListFragment;
@@ -36,7 +29,6 @@ import com.tomo3284.lcmanagementapp.fragments.SolvingFragment;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 

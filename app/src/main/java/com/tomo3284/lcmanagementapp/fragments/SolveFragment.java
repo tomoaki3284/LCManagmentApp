@@ -19,7 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.king.view.arcseekbar.ArcSeekBar;
-import com.tomo3284.lcmanagementapp.MainActivity;
+import com.tomo3284.lcmanagementapp.Activity.MainActivity;
 import com.tomo3284.lcmanagementapp.Models.Problem;
 import com.tomo3284.lcmanagementapp.Models.User;
 import com.tomo3284.lcmanagementapp.Models.UserViewModel;

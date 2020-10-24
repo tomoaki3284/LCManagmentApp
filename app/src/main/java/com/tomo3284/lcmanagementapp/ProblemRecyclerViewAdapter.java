@@ -11,6 +11,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.tomo3284.lcmanagementapp.Activity.MainActivity;
 import com.tomo3284.lcmanagementapp.Models.Problem;
 import com.tomo3284.lcmanagementapp.Models.ProblemList;
 import com.tomo3284.lcmanagementapp.fragments.ProblemDetailFragment;
