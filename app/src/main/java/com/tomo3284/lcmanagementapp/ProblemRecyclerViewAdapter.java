@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -62,6 +63,12 @@ public class ProblemRecyclerViewAdapter extends RecyclerView.Adapter<ProblemRecy
                 mParentActivity.pushFragment(problemDetailFragment, ProblemDetailFragment.TAG);
             }
         });
+
+        if(!problem.isCompleted()){
+            holder.completenessIV.setImageResource(R.color.white);
+        }else{
+            holder.completenessIV.setImageResource(R.drawable.ic_checkmark);
+        }
     }
 
     @Override
@@ -76,6 +83,7 @@ public class ProblemRecyclerViewAdapter extends RecyclerView.Adapter<ProblemRecy
         private TextView difficultyTV;
         private TextView estimatedTV;
         private TextView elapsedTV;
+        private ImageView completenessIV;
 
         public ProblemViewHolder(View itemView) {
             super(itemView);
@@ -84,6 +92,7 @@ public class ProblemRecyclerViewAdapter extends RecyclerView.Adapter<ProblemRecy
             difficultyTV = itemView.findViewById(R.id.difficultyTV);
             estimatedTV = itemView.findViewById(R.id.estimatedTV);
             elapsedTV = itemView.findViewById(R.id.elapsedTV);
+            completenessIV = itemView.findViewById(R.id.imageView);
         }
     }
 }

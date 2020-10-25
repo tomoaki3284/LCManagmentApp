@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +35,7 @@ import java.io.ObjectOutputStream;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String INTENT_KEY_TO_WELCOME = "MainActivity to IntroActivity";
     private MainActivity mainActivity = this;
 
     // view related
@@ -233,5 +235,11 @@ public class MainActivity extends AppCompatActivity {
         int topIndex = getSupportFragmentManager().getBackStackEntryCount() - 1;
         FragmentManager.BackStackEntry backEntry = getSupportFragmentManager().getBackStackEntryAt(topIndex);
         return backEntry.getName();
+    }
+
+    public void onQuestionButtonClick() {
+        Intent intent = new Intent(this, IntroActivity.class);
+        intent.putExtra(INTENT_KEY_TO_WELCOME, true);
+        startActivity(intent);
     }
 }

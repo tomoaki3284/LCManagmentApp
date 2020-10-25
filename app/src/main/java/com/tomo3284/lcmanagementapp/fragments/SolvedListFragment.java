@@ -15,8 +15,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.tomo3284.lcmanagementapp.Activity.MainActivity;
+import com.tomo3284.lcmanagementapp.Models.Problem;
 import com.tomo3284.lcmanagementapp.Models.User;
 import com.tomo3284.lcmanagementapp.Models.UserViewModel;
 import com.tomo3284.lcmanagementapp.ProblemRecyclerViewAdapter;
@@ -55,8 +57,20 @@ public class SolvedListFragment extends Fragment {
         setupButtons();
         setupViewModels();
         setupRecyclerView();
+        setupView();
 
         return mView;
+    }
+
+    private void setupView() {
+        TextView numOfSolvedTV = mView.findViewById(R.id.numOfSolvedProblemsTV);
+        int solved = 0;
+        for(Problem problem : mUser.getProblemList().getProblems()){
+            if(problem.isCompleted()){
+                solved++;
+            }
+        }
+        numOfSolvedTV.setText(solved+" solved");
     }
 
     private void setupRecyclerView() {

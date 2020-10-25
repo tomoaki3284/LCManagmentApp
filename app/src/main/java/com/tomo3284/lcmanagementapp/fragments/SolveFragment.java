@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.king.view.arcseekbar.ArcSeekBar;
 import com.tomo3284.lcmanagementapp.Activity.MainActivity;
@@ -120,6 +121,14 @@ public class SolveFragment extends Fragment {
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
+        ImageView questionButton = mView.findViewById(R.id.questionButton);
+        questionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mParentActivity.onQuestionButtonClick();
+            }
+        });
 
         Button startButton = mView.findViewById(R.id.startButton);
         startButton.setOnClickListener(new View.OnClickListener() {

@@ -8,6 +8,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
@@ -19,10 +21,15 @@ import com.tomo3284.lcmanagementapp.R;
 import com.tomo3284.lcmanagementapp.fragments.IntroPage1Fragment;
 import com.tomo3284.lcmanagementapp.fragments.IntroPage2Fragment;
 import com.tomo3284.lcmanagementapp.fragments.IntroPage3Fragment;
+import com.tomo3284.lcmanagementapp.fragments.IntroPage4Fragment;
 
 public class IntroActivity extends AppCompatActivity {
 
-    private static final int NUM_PAGES = 3;
+    private static final int NUM_PAGES = 4;
+    private final String SHARED_PREFS = "shared preferences for intro";
+    private final String KEY_NEED_EXPLANATION = "need intro";
+    private boolean mNeedExplanation = true;
+    private boolean mRevisit;
 
     private IntroActivity activity = this;
     private ImageView mBgImg;
@@ -37,7 +44,31 @@ public class IntroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
 
+        Bundle extras = getIntent().getExtras();
+        // if extra exist, that mean it is from main activity for revisiting intro page purpose
+        mRevisit = extras != null;
+
+        if (savedInstanceState == null) {
+            loadDataFromSharedPreferences();
+            if (!mNeedExplanation && !mRevisit) {
+                navigateToMainActivity();
+            }
+        }
+
         setupView();
+    }
+
+    private void loadDataFromSharedPreferences() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        mNeedExplanation = sharedPreferences.getBoolean(KEY_NEED_EXPLANATION, true);
+    }
+
+    private void saveDataToSharedPreferences() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putBoolean(KEY_NEED_EXPLANATION, mNeedExplanation);
+        editor.apply();
     }
 
     private void setupView() {
@@ -60,6 +91,19 @@ public class IntroActivity extends AppCompatActivity {
         window.setStatusBarColor(ContextCompat.getColor(activity, R.color.white));
     }
 
+    public void navigateToMainActivity() {
+        if (mRevisit) {
+            // if revisit, then MainActivity is on BackStack, so just finish
+            finish();
+        }
+
+        mNeedExplanation = false;
+        saveDataToSharedPreferences();
+        Intent mainIntent = new Intent(this, MainActivity.class);
+        startActivity(mainIntent);
+        finish();
+    }
+
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
 
         public ScreenSlidePagerAdapter(@NonNull FragmentManager fm) {
@@ -79,6 +123,9 @@ public class IntroActivity extends AppCompatActivity {
                 case 2:
                     IntroPage3Fragment introPage3Fragment = new IntroPage3Fragment();
                     return introPage3Fragment;
+                case 3:
+                    IntroPage4Fragment introPage4Fragment = new IntroPage4Fragment();
+                    return introPage4Fragment;
             }
 
             return null;
