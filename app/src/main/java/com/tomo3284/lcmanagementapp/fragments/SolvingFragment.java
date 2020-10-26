@@ -76,7 +76,6 @@ public class SolvingFragment extends Fragment {
         laterButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                // TODO: 2020/10/05 - populate dialog to confirm to exit and go result page
                 mElapsedTimeMillis = SystemClock.elapsedRealtime() - mChronometer.getBase();
                 new AlertDialog.Builder(getContext())
                         .setTitle("Later")

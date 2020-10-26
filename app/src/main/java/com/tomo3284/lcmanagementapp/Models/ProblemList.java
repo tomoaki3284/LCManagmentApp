@@ -1,12 +1,23 @@
 package com.tomo3284.lcmanagementapp.Models;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static androidx.room.ForeignKey.CASCADE;
+
+
 public class ProblemList implements Serializable {
-    public List<Problem> problems;
+
+    private String username;
+
+    private List<Problem> problems;
 
     public ProblemList() {
         this.problems = new ArrayList<>();
