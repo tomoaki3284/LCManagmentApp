@@ -1,23 +1,61 @@
 package com.tomo3284.lcmanagementapp.Models;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 
+import static androidx.room.ForeignKey.CASCADE;
+
+@Entity(tableName = "problems", foreignKeys = @ForeignKey(entity = User.class,
+                                                        parentColumns = "username",
+                                                        childColumns = "username",
+                                                        onDelete = CASCADE))
 public class Problem implements Serializable {
 
-    private String difficulty;
-    private long estimateTimeMillis;
-    private long elapsedTimeMillis;
-    private String title;
+    // foreign key
+    @ColumnInfo(name = "username")
+    private String username;
+
+    @ColumnInfo(name = "problem_number")
     private int problemNumber;
+
+    @ColumnInfo(name = "difficulty")
+    private String difficulty;
+
+    @ColumnInfo(name = "estimate_time_millis")
+    private long estimateTimeMillis;
+
+    @ColumnInfo(name = "elapsed_time_millis")
+    private long elapsedTimeMillis;
+
+    @ColumnInfo(name = "title")
+    private String title;
+
+    @ColumnInfo(name = "note")
     private String note;
+
+    @ColumnInfo(name = "completed")
     private boolean completed;
 
-    public Problem(String difficulty, String title, int problemNumber) {
+    public Problem(String difficulty, String title, int problemNumber, String username) {
         this.difficulty = difficulty;
         this.title = title;
         this.problemNumber = problemNumber;
         this.note = "";
         this.completed = false;
+        this.username = username;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getDifficulty() {

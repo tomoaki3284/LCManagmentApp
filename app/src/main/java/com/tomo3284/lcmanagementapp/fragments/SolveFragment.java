@@ -143,7 +143,7 @@ public class SolveFragment extends Fragment {
 
                 if (!validInputs(problemTitle, problemNumber)) return;
 
-                Problem problem = new Problem(mDifficulty, problemTitle, problemNumber);
+                Problem problem = new Problem(mDifficulty, problemTitle, problemNumber, mUser.getUsername());
                 problem.setEstimatedTimeMin(mEstimateBar.getProgress());
                 mUser.getProblemList().addProblem(problem);
                 SolvingFragment solvingFragment = new SolvingFragment();

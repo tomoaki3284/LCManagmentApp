@@ -97,10 +97,10 @@ public class IntroActivity extends AppCompatActivity {
             finish();
         }
 
+        Intent mainIntent = new Intent(this, SigninActivity.class);
+        startActivity(mainIntent);
         mNeedExplanation = false;
         saveDataToSharedPreferences();
-        Intent mainIntent = new Intent(this, MainActivity.class);
-        startActivity(mainIntent);
         finish();
     }
 
